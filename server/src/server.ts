@@ -1,6 +1,9 @@
 import app from "./app";
+import dotenv from "dotenv";
 
-const PORT: number = 5050;
+dotenv.config();
+
+const PORT = process.env.PORT || 5050;
 
 // 서버 실행
 app.listen(PORT, () => {
