@@ -3,7 +3,6 @@ import db from "../config/dbConfig";
 
 interface User extends RowDataPacket {
   id: number;
-  // 다른 사용자 필드들도 여기에 정의
 }
 
 export const getAllUsers = async (): Promise<User[]> => {

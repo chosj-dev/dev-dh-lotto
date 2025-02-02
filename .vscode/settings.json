@@ -1,8 +1,10 @@
 {
+  "typescript.tsdk": "./.yarn/sdks/typescript/lib",
+  "eslint.nodePath": ".yarn/sdks",
+  "javascript.validate.enable": false,
   "search.exclude": {
     "**/.yarn": true,
     "**/.pnp.*": true
   },
-  "typescript.tsdk": ".yarn/sdks/typescript/lib",
-  "eslint.nodePath": ".yarn/sdks"
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

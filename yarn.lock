@@ -1342,6 +1342,7 @@ __metadata:
   resolution: "donghaeng-lotto@workspace:."
   dependencies:
     concurrently: "npm:^9.1.2"
+    typescript: "npm:^5.7.3"
   languageName: unknown
   linkType: soft
 
