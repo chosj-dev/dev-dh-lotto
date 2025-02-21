@@ -1,36 +1,27 @@
 import { Request, Response } from "express";
-import { getAllUsers, getUserById } from "../../../services/userService";
+import { registerUser } from "../../../services/userService";
 
-export const fetchAllUsers = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    const users = await getAllUsers();
-    console.log(users);
-    res.json(users);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error fetching users" });
+/**
+ * 회원가입 컨트롤러
+ */
+export const register = async (req: Request, res: Response): Promise<void> => {
+  const { userId, password, lotteryUserId, lotteryPassword } = req.body;
+
+  if (!userId || !password || !lotteryUserId || !lotteryPassword) {
+    res.status(400).json({ message: "모든 필드를 입력해야 합니다." });
+    return;
   }
-};
 
-export const fetchUserById = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    const userId = parseInt(req.params.id);
-    const user = await getUserById(userId);
+  const result = await registerUser(
+    userId,
+    password,
+    lotteryUserId,
+    lotteryPassword
+  );
 
-    if (!user) {
-      res.status(404).json({ message: "User not found" });
-      return;
-    }
-
-    res.json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error fetching user" });
+  if (result.success) {
+    res.status(201).json({ message: result.message });
+  } else {
+    res.status(400).json({ message: result.message });
   }
 };

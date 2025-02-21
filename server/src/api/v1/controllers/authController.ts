@@ -1,11 +1,6 @@
 import { Request, Response } from "express";
 import * as authService from "../../../services/authService";
 
-interface User {
-  userId: string;
-  userPwd: string;
-}
-
 export const login = async (req: Request, res: Response) => {
   const { userId, userPwd } = req.body;
 
@@ -27,6 +22,7 @@ export const logout = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }
+  3;
 };
 
 // Access Token 재발급 처리
@@ -39,4 +35,11 @@ export const refreshToken = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(403).json({ message: (error as Error).message });
   }
+};
+
+export const join = async (req: Request, res: Response) => {
+  const { userId, userPassword, dhUserId, dhUserPassword } = req.body;
+
+  try {
+  } catch (error) {}
 };
