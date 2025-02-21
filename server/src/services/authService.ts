@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import redisClient from "../config/redisConfig";
+import { AppDataSource } from "../data-source";
+import { User } from "../entities/User";
 import { StringValue } from "ms";
 
 dotenv.config();
@@ -8,6 +10,23 @@ dotenv.config();
 interface UserPayload {
   userId: string;
 }
+
+const userRepository = AppDataSource.getRepository(User);
+
+export const generateRefreshToken = (userId: string, refreshToken: string) => {
+  return jwt.sign({ id: userId }, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: "7d",
+  });
+};
+
+export const storeRefreshToken = async (
+  userId: string,
+  refreshToken: string
+) => {
+  const key = `refreshToken:${userId}`;
+  const ttl = 60 * 60 * 24 * 7;
+  await redisClient.set(key, refreshToken, { EX: ttl });
+};
 
 // 로그인 함수
 export const loginUser = async (userId: string, userPwd: string) => {
